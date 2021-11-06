@@ -74,7 +74,8 @@ body {
   flex-flow: row wrap;
 }
 
-.operator {
+.operator,
+.result {
   width: 100%;
 
   flex-grow: 1;
@@ -104,7 +105,8 @@ body {
   border: none;
 }
 
-.button:hover {
+.button:hover,
+.result:hover {
   background-color: #740794;
   color: #f9fbfc;
 }
