@@ -1,6 +1,7 @@
-var display = document.getElementById('display');
-var keys = document.getElementsByClassName('number');
-var operators = document.getElementsByClassName('operator');
+const display = document.getElementById('display');
+const opDisplay = document.getElementById('opDisplay');
+const keys = document.getElementsByClassName('number');
+const operators = document.getElementsByClassName('operator');
 const result = document.getElementsByClassName('result');
 const clear = document.getElementsByClassName('clear');
 
@@ -11,6 +12,7 @@ var operator = null;
 // EVENT LISTENERS
 
 clear[0].addEventListener('click', clearDisplay)
+clear[0].addEventListener('dblclick', masterClear)
 
 // Inserir os números selecionados no display
 for (let el of keys) {
@@ -36,6 +38,14 @@ result[0].addEventListener('click', () => {
 
 function clearDisplay() {
     display.innerText = '0';
+}
+
+function masterClear() {
+    display.innerText = '0';
+    opDisplay.innerText = '';
+    firstInput = null;
+    secondInput = null;
+    operator = null;
 }
 
 function clearOperatorAndInputs() {
@@ -102,9 +112,11 @@ function checkInputs() {
         return true;
     } else if (firstInput != null) {
         secondInput = parseFloat(display.innerText);
+        opDisplay.innerText += ` ${secondInput}`;
         return true;
     } else {
         firstInput = parseFloat(display.innerText);
+        opDisplay.innerText = `${firstInput} ${operator}`;
         return false;
     }
 }
