@@ -43,9 +43,7 @@ function clearDisplay() {
 function masterClear() {
     display.innerText = '0';
     opDisplay.innerText = '';
-    firstInput = null;
-    secondInput = null;
-    operator = null;
+    clearOperatorAndInputs();
 }
 
 function clearOperatorAndInputs() {
