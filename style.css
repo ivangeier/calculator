@@ -88,7 +88,7 @@ body {
 }
 
 .operator,
-.result {
+#result {
   width: 100%;
 
   flex-grow: 1;
@@ -119,11 +119,11 @@ body {
 }
 
 .button:hover,
-.result:hover {
+#result:hover {
   background-color: #740794;
   color: #f9fbfc;
 }
 
-.result {
+#result {
   background-color: #7301c4;
 }

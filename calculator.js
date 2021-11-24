@@ -1,45 +1,12 @@
-const display = document.getElementById('display');
-const opDisplay = document.getElementById('opDisplay');
-const keys = document.getElementsByClassName('number');
-const operators = document.getElementsByClassName('operator');
-const result = document.getElementsByClassName('result');
-const clear = document.getElementsByClassName('clear');
-
 var firstInput = null;
 var secondInput = null;
 var operator = null;
-
-// EVENT LISTENERS
-
-clear[0].addEventListener('click', clearDisplay)
-clear[0].addEventListener('dblclick', masterClear)
-
-// Inserir os números selecionados no display
-for (let el of keys) {
-    el.addEventListener('click', () => {
-        insertNumber(el.innerText);
-    })
-}
-
-// Operacoes selecionadas
-for (let op of operators) {
-    op.addEventListener('click', () =>{
-        operator = op.innerText;
-        operation();
-    })
-}
-
-//Igual selecionado
-result[0].addEventListener('click', () => {
-    if (operator) {
-        operation();
-    }
-})
 
 function clearDisplay() {
     display.innerText = '0';
 }
 
+// Double click on C trigger Master Clear
 function masterClear() {
     display.innerText = '0';
     opDisplay.innerText = '';
@@ -55,10 +22,10 @@ function clearOperatorAndInputs() {
 // FUNCTIONALITIES
 
 function insertNumber(number) {
-    // Não deixa inserir números maiores que 9 digitos
+    // Allow only number with 8 digits
     if (display.innerText.length < 9) {
 
-        // Se display está zerado substitui pelo número pressionado
+        // If display is 0 remove to add number (to prevent number with 0 on the left)
         if (display.innerText == '0') {
             display.innerText = number;
         } else {
@@ -67,6 +34,24 @@ function insertNumber(number) {
     }
 }
 
+function checkInputs() {
+    // If we already have two inputs - perform operation
+    if (firstInput != null && secondInput != null) {
+        return true;
+    // If we have first input only - save second input and perform operation
+    } else if (firstInput != null) {
+        secondInput = parseFloat(display.innerText);
+        opDisplay.innerText += ` ${secondInput}`;
+        return true;
+    // If we have no inputs yet - save input on firstInput and return false to ask second input
+    } else {
+        firstInput = parseFloat(display.innerText);
+        opDisplay.innerText = `${firstInput} ${operator}`;
+        return false;
+    }
+}
+
+// Check and perform operation selected
 function operation() {
     switch (operator) {
         case '+':
@@ -105,19 +90,8 @@ function operation() {
     }
 }
 
-function checkInputs() {
-    if (firstInput != null && secondInput != null) {
-        return true;
-    } else if (firstInput != null) {
-        secondInput = parseFloat(display.innerText);
-        opDisplay.innerText += ` ${secondInput}`;
-        return true;
-    } else {
-        firstInput = parseFloat(display.innerText);
-        opDisplay.innerText = `${firstInput} ${operator}`;
-        return false;
-    }
-}
+// OPERATIONS
+// Perform operation, clear operational display and clear input variables
 
 function soma(){
    display.innerText = firstInput + secondInput;
@@ -136,3 +110,4 @@ function divisao(){
     display.innerText = firstInput / secondInput;
    clearOperatorAndInputs();
 };
+
